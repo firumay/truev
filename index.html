@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+<div class="bingo">
+    <img id="imageToChange" src="i%20(2).webp" alt="">
+    <div class="flex">
+        <div id="yes">да</div>
+        <div id="randomDiv">нет</div>
+    </div>
+</div>
+<script>
+    const randomDiv = document.getElementById('randomDiv');
+
+    function moveDiv() {
+        const randomX = Math.random() * (window.innerWidth - randomDiv.clientWidth);
+        const randomY = Math.random() * (window.innerHeight - randomDiv.clientHeight);
+
+        randomDiv.style.left = `${randomX}px`;
+        randomDiv.style.top = `${randomY}px`;
+    }
+
+    function shakeAndRed() {
+        const originalColor = randomDiv.style.backgroundColor;
+
+        // Краснеет на 0.5 секунд
+        randomDiv.style.backgroundColor = 'red';
+        randomDiv.classList.add('shake');
+
+        // Возвращаем цвет и убираем тряску через 0.5 секунд
+        setTimeout(() => {
+            randomDiv.style.backgroundColor = originalColor;
+            randomDiv.classList.remove('shake');
+        }, 500);
+    }
+
+    randomDiv.addEventListener('mouseenter', moveDiv);
+
+    randomDiv.addEventListener('click', () => {
+        moveDiv();
+        shakeAndRed();
+    });
+
+    // Добавляем обработчик для сенсорных экранов
+    randomDiv.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // Предотвращаем стандартное поведение на мобильных устройствах
+        moveDiv();
+        shakeAndRed();
+    });
+    document.getElementById("yes").addEventListener("click", function() {
+        document.getElementById("imageToChange").src = "creepy-insainment.gif"; // Указываем новый путь к картинке
+    });
+
+
+    // Создаем объект аудио
+    const audio = new Audio('ttt.mp3');
+    const sd = document.getElementById("yes")
+
+    // Функция для воспроизведения звука при клике
+    document.getElementById('yes').addEventListener('click', function() {
+        audio.play();  // Проигрывание звук
+        audio.loop = true;
+        randomDiv.style.display = 'none';
+        sd.style.display = 'none';
+    });
+    </script>
+</body>
+</html>
